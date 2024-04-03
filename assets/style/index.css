@@ -1,0 +1,180 @@
+@charset "utf-8";
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Main */
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #2980b9, #2c3e50); /* Gradient background */
+  color: #fff; /* White text color */
+  background-image: 
+  url('https://media.giphy.com/media/3o6vXTpomeZEyxufGU/giphy.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#score-container {
+  margin-bottom: 100px; /* Increase margin between score and word input */
+  font-size: 40px;
+}
+
+#word-display {
+  font-size: 36px;
+  position: absolute;
+  top: 55%; /* Adjust the distance from the top */
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#word-input {
+  width: 200px;
+  margin-top: 10px;
+  padding: 15px; /* Increase padding */
+  font-size: 20px; /* Increase font size of input */
+  border: 3px solid rgb(196, 8, 196);
+  border-radius: 20px;
+}
+
+#end-message {
+  position: absolute;
+  bottom: 20%; /* Adjust the distance from the bottom */
+  font-size: 24px;
+  text-align: center;
+  width: 100%;
+  color: #fff;
+}
+
+h1 {
+  font-size: 70px;
+}
+
+.glow-on-hover {
+  margin-top: 30px;
+  width: 100px;
+  height: 50px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  text-decoration: none; /* Remove underline */
+}
+
+.glow-on-hover:before {
+  content: '';
+  background: linear-gradient(
+    45deg, #ff0000, #ff7300, #fffb00, 
+    #48ff00, #00ffd5, #002bff,
+    #7a00ff, #ff00c8, #ff0000
+    );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+}
+
+.glow-on-hover:active {
+  color: #000;
+}
+
+.glow-on-hover:active:after {
+  background: transparent;
+}
+
+.glow-on-hover:hover:before {
+  opacity: 1;
+}
+
+.glow-on-hover:after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+input {
+  color: #fff;
+  padding: 10px;
+  border: 2px solid #aaa;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: transparent; /* Set background color to transparent */
+}
+
+h1 {
+  font-family: 'Exo', sans-serif;
+  font-size: 9em;
+  margin: 0;
+  transform: skew(-15deg);
+  letter-spacing: 0.03em;
+  position: relative;
+  z-index: 1; /* Ensure the text is above the background */
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  top: -0.1em;
+  right: 0.05em;
+  width: 0.4em;
+  height: 0.4em;
+  background: radial-gradient(white 3%, rgba(white, 0.3) 15%, 
+  rgba(white, 0.05) 60%, transparent 80%),
+              radial-gradient(rgba(white, 0.2) 50%, 
+              transparent 60%) 50% 50% / 5% 100%,
+              radial-gradient(rgba(white, 0.2) 50%, 
+              transparent 60%) 50% 50% / 70% 5%;
+  background-repeat: no-repeat;
+}
+
+h1 span:first-child {
+  display: block;
+  text-shadow: 0 0 0.1em #8ba2d0, 0 0 0.2em black,  0 0 5em #165ff3;
+  -webkit-text-stroke: 0.06em rgba(black, 0.5);
+}
+
+h1 span:last-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: linear-gradient(
+    #032d50 25%, #00a1ef 35%, white 50%, 
+    #20125f 50%, #8313e7 55%, #ff61af 75%
+    );
+  -webkit-text-stroke: 0.01em #94a0b9;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
