@@ -4,6 +4,7 @@ body {
   font-family: "Poppins", sans-serif;
   margin: 0;
   overflow: hidden;
+  background-color: #000;
 }
 
 /* Main */
@@ -14,31 +15,31 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  padding: 50px; /* Add padding */
   background: linear-gradient(135deg, #2980b9, #2c3e50); /* Gradient background */
   color: #fff; /* White text color */
-  background-image: 
-  url('https://media.giphy.com/media/3o6vXTpomeZEyxufGU/giphy.gif');
-  background-size: cover;
-  background-position: center;
+  background-image: url('https://media.giphy.com/media/3o6vXTpomeZEyxufGU/giphy.gif');
+  background-size: 55%; /* Shrink the background image to 55% of its original size */
+  background-position: center; /* Center the background image */
   background-repeat: no-repeat;
 }
 
 #score-container {
-  margin-bottom: 100px; /* Increase margin between score and word input */
+  margin-bottom: 10px; /* Increase margin between score and word input */
   font-size: 40px;
 }
 
 #word-display {
   font-size: 36px;
   position: absolute;
-  top: 55%; /* Adjust the distance from the top */
+  top: 58%; /* Adjust the distance from the top */
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 #word-input {
   width: 200px;
-  margin-top: 10px;
+  margin-top: 100px;
   padding: 15px; /* Increase padding */
   font-size: 20px; /* Increase font size of input */
   border: 3px solid rgb(196, 8, 196);
@@ -55,11 +56,12 @@ body {
 }
 
 h1 {
-  font-size: 70px;
+  font-size: 100px;
+  margin-bottom: 50px; 
 }
 
 .glow-on-hover {
-  margin-top: 30px;
+  margin-top: 20px;
   width: 100px;
   height: 50px;
   border: none;
@@ -161,19 +163,23 @@ h1::after {
 }
 
 h1 span:first-child {
+  margin: 100px 0 0 20px;
   display: block;
+  font-size: 80px; /* Adjust the font size as needed */
   text-shadow: 0 0 0.1em #8ba2d0, 0 0 0.2em black,  0 0 5em #165ff3;
   -webkit-text-stroke: 0.06em rgba(black, 0.5);
 }
 
 h1 span:last-child {
+  margin: 100px 0 0 20px;
   position: absolute;
   left: 0;
   top: 0;
+  font-size: 80px; /* Adjust the font size as needed */
   background-image: linear-gradient(
     #032d50 25%, #00a1ef 35%, white 50%, 
     #20125f 50%, #8313e7 55%, #ff61af 75%
-    );
+  );
   -webkit-text-stroke: 0.01em #94a0b9;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
