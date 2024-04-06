@@ -15,24 +15,26 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding: 50px; /* Add padding */
+  padding: 50px; 
   background: linear-gradient(135deg, #2980b9, #2c3e50); /* Gradient background */
-  color: #fff; /* White text color */
-  background-image: url('https://media.giphy.com/media/3o6vXTpomeZEyxufGU/giphy.gif');
+  color: #fff; 
+  background-image: 
+  url('https://media.giphy.com/media/3o6vXTpomeZEyxufGU/giphy.gif');
   background-size: 55%; /* Shrink the background image to 55% of its original size */
-  background-position: center; /* Center the background image */
+  background-position: center; 
   background-repeat: no-repeat;
 }
 
 #score-container {
-  margin-bottom: 10px; /* Increase margin between score and word input */
+  margin-bottom: 10px; 
   font-size: 40px;
 }
 
 #word-display {
+  margin-top: 10px;
   font-size: 36px;
   position: absolute;
-  top: 58%; /* Adjust the distance from the top */
+  top: 50%; /* Adjust the distance from the top */
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -40,8 +42,8 @@ body {
 #word-input {
   width: 200px;
   margin-top: 100px;
-  padding: 15px; /* Increase padding */
-  font-size: 20px; /* Increase font size of input */
+  padding: 15px; 
+  font-size: 20px; 
   border: 3px solid rgb(196, 8, 196);
   border-radius: 20px;
 }
@@ -56,19 +58,38 @@ body {
 }
 
 #scoreboard-container {
+  width: 500px;
+  height: 500px;
   display: none;
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0; /* Adjusted to cover the entire height of the screen */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #f380f3;
   border-radius: 10px;
-  overflow-y: auto; /* Add scrollbar if content exceeds the height */
+  overflow-y: auto;
+  z-index: 1000; /* Ensure it's above the blur or filter */
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999; /* Place it beneath the leaderboard container */
 }
 
 #scoreboard {
   height: auto;
+}
+
+#scoreboard div {
+  font-size: 30px;
+  text-align: center;
 }
 
 h1 {
@@ -78,15 +99,15 @@ h1 {
 
 h2 {
   text-align: center;
+  font-size: 4rem;
 }
 
-.leaderboard-item {
-  text-align: center;
-}
 /* button */
 
 .glow-on-hover {
-  margin-top: 20px;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 100px;
   width: 100px;
   height: 50px;
   border: none;
@@ -188,7 +209,7 @@ h1::after {
 }
 
 h1 span:first-child {
-  margin: 100px 0 0 20px;
+  margin: 120px 0 0 20px;
   display: block;
   font-size: 80px; /* Adjust the font size as needed */
   text-shadow: 0 0 0.1em #8ba2d0, 0 0 0.2em black,  0 0 5em #165ff3;
@@ -196,7 +217,7 @@ h1 span:first-child {
 }
 
 h1 span:last-child {
-  margin: 100px 0 0 20px;
+  margin: 120px 0 0 20px;
   position: absolute;
   left: 0;
   top: 0;
@@ -208,4 +229,82 @@ h1 span:last-child {
   -webkit-text-stroke: 0.01em #94a0b9;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* scoreboard button */
+
+.button-63 {
+  width: 100px; /* Adjust width to match the start button */
+  height: 50px; 
+  align-items: center;
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  line-height: 1em;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 19px 24px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+#view-scoreboard-btn {
+  position: relative;
+  top: 120px; /* Adjust the distance from the start button */
+}
+
+.button-63:active,
+.button-63:hover {
+  outline: 0;
+  box-shadow: 0 0 20px rgb(196, 8, 196);;
+}
+
+/* close button */
+
+#close-leaderboard-btn {
+  width: 50px;
+  border-radius: 5px;
+}
+
+.close {
+  position: absolute;
+  top: 0; 
+  right: -40px; 
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.close::before,
+.close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 2px;
+  background-color: #80f3f3;
+  transition: transform 0.3s ease-in-out;
+}
+
+.close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.close:hover::before,
+.close:hover::after {
+  background-color: #80f3f3;
 }

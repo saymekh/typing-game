@@ -2,7 +2,7 @@
 
 // Define global variables
 let timer;
-let timeLeft = 20;
+let timeLeft;
 let hits = 0;
 let gameOver = false;
 let scores = [];
@@ -56,6 +56,7 @@ function startGame() {
   timer = setInterval(updateTimer, 1000);
   displayNextWord();
   wordDisplay.style.display = 'block';
+  viewScoreboardBtn.disabled = true; // Disable scoreboard button
 }
 
 // Reset game function
@@ -72,6 +73,7 @@ function resetGame() {
   gameOver = true;
   document.getElementById('end-message').style.display = 'none';
   wordDisplay.style.display = 'none';
+  viewScoreboardBtn.disabled = false; // Enable scoreboard button
 }
 
 // Update timer function
@@ -144,7 +146,9 @@ function endGame() {
   }
   
   playScoreSound(scoreSoundId);
-  const score = { hits, percentage: ((hits / words.length) * 100).toFixed(2), date: new Date() };
+  const score = { 
+    hits, percentage: ((hits / words.length) * 100).toFixed(2), date: new Date() 
+  };
   scores.push(score);
   scores.sort((a, b) => b.hits - a.hits);
   scores.splice(10); // Keep only top 10 scores
@@ -152,9 +156,11 @@ function endGame() {
   // Update scoreboard
   updateScoreboard();
 
-  const endMessage = hits === words.length ? 'Congratulations!' : `Game Over! Your final score is ${hits}`;
+  const endMessage = hits === words.length ? 
+  'Congratulations!' : `Game Over! Your final score is ${hits}`;
   wordDisplay.textContent = endMessage;
   wordDisplay.style.display = 'block';
+  viewScoreboardBtn.disabled = false; // Enable scoreboard button
 }
 
 // Play score sound function
@@ -170,19 +176,25 @@ function updateScoreboard() {
   scoreboard.innerHTML = ''; // Clear previous scoreboard
   scores.forEach((score, index) => {
     const listItem = document.createElement('div');
-    listItem.textContent = `#${index + 1}   Hits: ${score.hits}. Percentage: ${score.percentage}%`;
+    listItem.textContent = `#${index + 1}   
+    Hits: ${score.hits} Percentage: ${score.percentage}%`;
     scoreboard.appendChild(listItem);
   });
 }
 
-// Toggle scoreboard visibility function
+document.body.style.filter = "none";
+
+// Update toggleScoreboard function to show/hide the container and overlay
 function toggleScoreboard() {
+  if (!gameOver) return; // Only toggle scoreboard if the game is over
+  const scoreboardContainer = document.getElementById('scoreboard-container');
+  const overlay = document.getElementById('overlay');
   if (scoreboardContainer.style.display === 'none') {
     scoreboardContainer.style.display = 'block';
-    viewScoreboardBtn.textContent = 'Hide Scoreboard';
+    overlay.style.display = 'block'; // Show overlay
   } else {
     scoreboardContainer.style.display = 'none';
-    viewScoreboardBtn.textContent = 'View Scoreboard';
+    overlay.style.display = 'none'; // Hide overlay
   }
 }
 
