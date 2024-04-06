@@ -153,27 +153,68 @@ function playScoreSound(soundId) {
 }
 
 // Score class
-class Score {
-  constructor(date, hits) {
-    this._date = date;
-    this._hits = hits;
-    this._percentage = ((hits / 90) * 100).toFixed(2);
-  }
+// Replace the Score class with regular objects
+function createScore(hits) {
+  return {
+    date: new Date(),
+    hits: hits,
+    percentage: ((hits / 90) * 100).toFixed(2)
+  };
+}
 
-  get date() {
-    return this._date;
-  }
+// Retrieve scores from localStorage
+function getScores() {
+  const scores = localStorage.getItem('scores');
+  return scores ? JSON.parse(scores) : [];
+}
 
-  get hits() {
-    return this._hits;
-  }
+// Store scores in localStorage
+function storeScores(scores) {
+  localStorage.setItem('scores', JSON.stringify(scores));
+}
 
-  get percentage() {
-    return this._percentage;
+// Update and display the scoreboard
+function updateScoreboard() {
+  const scores = getScores();
+  const scoreboard = document.getElementById('scoreboard');
+  scoreboard.innerHTML = ''; // Clear previous scoreboard
+
+  if (scores.length > 0) {
+    scores.slice(0, 10).forEach((score, index) => {
+      const scoreElement = document.createElement('div');
+      const gap = '&nbsp;&nbsp;&nbsp;&nbsp;'; // Adjust the number of non-breaking spaces as needed
+      scoreElement.innerHTML = `#&nbsp;${index + 1}${gap}${score.hits} words ${gap}${score.percentage}%`;
+      scoreboard.appendChild(scoreElement);
+      scoreElement.classList.add('leaderboard-item'); // Add a class for styling
+    });
+  } else {
+    scoreboard.textContent = 'No games played yet.';
   }
 }
 
-// Calculate percentage function
-function calculatePercentage(hits) {
-  return ((hits / words.length) * 100).toFixed(2);
+
+// Display the scoreboard
+updateScoreboard();
+
+// End game function
+function endGame() {
+  clearInterval(timer);
+  gameOver = true;
+  backgroundMusic.pause();
+
+  // Create and store the new score
+  const score = createScore(hits);
+  const scores = getScores();
+  scores.push(score);
+  scores.sort((a, b) => b.hits - a.hits); // Sort scores by hits
+  storeScores(scores);
+
+  // Update and display the scoreboard
+  updateScoreboard();
+
+  // Display end message
+  const endMessage = hits === words.length ? 'Congratulations!' : `Game Over! Your final score is ${hits}`;
+  wordDisplay.textContent = endMessage;
+  wordDisplay.style.display = 'block';
 }
+

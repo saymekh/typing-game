@@ -60,6 +60,15 @@ h1 {
   margin-bottom: 50px; 
 }
 
+h2 {
+  text-align: center;
+}
+
+.leaderboard-item {
+  text-align: center;
+}
+/* button */
+
 .glow-on-hover {
   margin-top: 20px;
   width: 100px;
