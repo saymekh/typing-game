@@ -55,6 +55,22 @@ body {
   color: #fff;
 }
 
+#scoreboard-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0; /* Adjusted to cover the entire height of the screen */
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  overflow-y: auto; /* Add scrollbar if content exceeds the height */
+}
+
+#scoreboard {
+  height: auto;
+}
+
 h1 {
   font-size: 100px;
   margin-bottom: 50px; 

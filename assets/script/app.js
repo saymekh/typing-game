@@ -5,6 +5,7 @@ let timer;
 let timeLeft = 20;
 let hits = 0;
 let gameOver = false;
+let scores = [];
 
 // Array of words
 const words = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 
@@ -30,11 +31,15 @@ const resetBtn = document.getElementById('reset-btn');
 const hitsDisplay = document.getElementById('hits');
 const timeDisplay = document.getElementById('time');
 const backgroundMusic = document.getElementById('background-music');
+const viewScoreboardBtn = document.getElementById('view-scoreboard-btn');
+const scoreboardContainer = document.getElementById('scoreboard-container');
+const scoreboard = document.getElementById('scoreboard');
 
 // Add event listeners
 startBtn.addEventListener('click', startGame);
 resetBtn.addEventListener('click', resetGame);
 wordInput.addEventListener('input', handleInput);
+viewScoreboardBtn.addEventListener('click', toggleScoreboard);
 
 // Start game function
 function startGame() {
@@ -52,7 +57,6 @@ function startGame() {
   displayNextWord();
   wordDisplay.style.display = 'block';
 }
-
 
 // Reset game function
 function resetGame() {
@@ -140,7 +144,14 @@ function endGame() {
   }
   
   playScoreSound(scoreSoundId);
-  const score = new Score(new Date(), hits);
+  const score = { hits, percentage: ((hits / words.length) * 100).toFixed(2), date: new Date() };
+  scores.push(score);
+  scores.sort((a, b) => b.hits - a.hits);
+  scores.splice(10); // Keep only top 10 scores
+
+  // Update scoreboard
+  updateScoreboard();
+
   const endMessage = hits === words.length ? 'Congratulations!' : `Game Over! Your final score is ${hits}`;
   wordDisplay.textContent = endMessage;
   wordDisplay.style.display = 'block';
@@ -149,72 +160,31 @@ function endGame() {
 // Play score sound function
 function playScoreSound(soundId) {
   const scoreSound = document.getElementById(soundId);
-  scoreSound.play();
-}
-
-// Score class
-// Replace the Score class with regular objects
-function createScore(hits) {
-  return {
-    date: new Date(),
-    hits: hits,
-    percentage: ((hits / 90) * 100).toFixed(2)
-  };
-}
-
-// Retrieve scores from localStorage
-function getScores() {
-  const scores = localStorage.getItem('scores');
-  return scores ? JSON.parse(scores) : [];
-}
-
-// Store scores in localStorage
-function storeScores(scores) {
-  localStorage.setItem('scores', JSON.stringify(scores));
-}
-
-// Update and display the scoreboard
-function updateScoreboard() {
-  const scores = getScores();
-  const scoreboard = document.getElementById('scoreboard');
-  scoreboard.innerHTML = ''; // Clear previous scoreboard
-
-  if (scores.length > 0) {
-    scores.slice(0, 10).forEach((score, index) => {
-      const scoreElement = document.createElement('div');
-      const gap = '&nbsp;&nbsp;&nbsp;&nbsp;'; // Adjust the number of non-breaking spaces as needed
-      scoreElement.innerHTML = `#&nbsp;${index + 1}${gap}${score.hits} words ${gap}${score.percentage}%`;
-      scoreboard.appendChild(scoreElement);
-      scoreElement.classList.add('leaderboard-item'); // Add a class for styling
-    });
-  } else {
-    scoreboard.textContent = 'No games played yet.';
+  if (scoreSound) {
+    scoreSound.play();
   }
 }
 
-
-// Display the scoreboard
-updateScoreboard();
-
-// End game function
-function endGame() {
-  clearInterval(timer);
-  gameOver = true;
-  backgroundMusic.pause();
-
-  // Create and store the new score
-  const score = createScore(hits);
-  const scores = getScores();
-  scores.push(score);
-  scores.sort((a, b) => b.hits - a.hits); // Sort scores by hits
-  storeScores(scores);
-
-  // Update and display the scoreboard
-  updateScoreboard();
-
-  // Display end message
-  const endMessage = hits === words.length ? 'Congratulations!' : `Game Over! Your final score is ${hits}`;
-  wordDisplay.textContent = endMessage;
-  wordDisplay.style.display = 'block';
+// Update scoreboard function
+function updateScoreboard() {
+  scoreboard.innerHTML = ''; // Clear previous scoreboard
+  scores.forEach((score, index) => {
+    const listItem = document.createElement('div');
+    listItem.textContent = `#${index + 1}   Hits: ${score.hits}. Percentage: ${score.percentage}%`;
+    scoreboard.appendChild(listItem);
+  });
 }
 
+// Toggle scoreboard visibility function
+function toggleScoreboard() {
+  if (scoreboardContainer.style.display === 'none') {
+    scoreboardContainer.style.display = 'block';
+    viewScoreboardBtn.textContent = 'Hide Scoreboard';
+  } else {
+    scoreboardContainer.style.display = 'none';
+    viewScoreboardBtn.textContent = 'View Scoreboard';
+  }
+}
+
+// Initial update of the scoreboard
+updateScoreboard();
