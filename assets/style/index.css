@@ -308,3 +308,10 @@ h1 span:last-child {
 .close:hover::after {
   background-color: #80f3f3;
 }
+
+.no-games-message {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #FFF; /* Adjust the color as needed */
+}
